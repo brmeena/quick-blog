@@ -6,12 +6,15 @@ import {
   cilChartPie,
   cilCursor,
   cilDrop,
+  cilFunctions,
+  cilGroup,
   cilNotes,
   cilPen,
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilTags,
   cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
@@ -32,6 +35,12 @@ const _nav = [
     name: 'Posts',
     to: '/blogposts',
     icon: <CIcon icon={cilPen} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Categories',
+    to: '/categories',
+    icon: <CIcon icon={cilTags} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,

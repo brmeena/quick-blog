@@ -14,6 +14,9 @@ function validateResourceType(resourceType){
          return;
       case resourcetypes.USER:
          return;
+      case resourcetypes.CATEGORY:
+            return;
+            
    }
    throw "invalid resource type :"+resourceType;
 }

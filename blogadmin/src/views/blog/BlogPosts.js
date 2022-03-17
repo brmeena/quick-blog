@@ -15,6 +15,7 @@ const BlogPosts=()=>{
         (
           <CTableRow key={postitem._id}>
           <CTableDataCell scope="row">{postitem.title}</CTableDataCell>
+          <CTableDataCell scope="row">{postitem.category && postitem.category.name}</CTableDataCell>
           <CTableDataCell>{postitem.updated}</CTableDataCell>
           <CTableDataCell><Link to={`/editpost?id=${postitem._id}`}>Edit</Link></CTableDataCell>
           </CTableRow>
@@ -34,6 +35,7 @@ const BlogPosts=()=>{
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell scope="col">Post Title</CTableHeaderCell>
+                <CTableHeaderCell scope="col">Category</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Last Update Date</CTableHeaderCell>
                 <CTableHeaderCell scope="col">Action</CTableHeaderCell>
               </CTableRow>
