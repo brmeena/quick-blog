@@ -15,6 +15,7 @@ function AddBlogPost() {
     const [postObj,setPostObj]=useState({'title':'','description':'','content':''});
     const search = useLocation().search;
     const postId = new URLSearchParams(search).get('id');
+    const uploadImageApi=`${process.env.REACT_APP_API_URL}/api/services/upload/image`
 
     let initValues={
         'title':postObj['title'],
@@ -94,12 +95,14 @@ function AddBlogPost() {
                   plugins: [
                     'advlist autolink textcolor lists link charmap print preview anchor',
                     'searchreplace visualblocks code fullscreen',
-                    'insertdatetime table paste code help wordcount'
+                    'insertdatetime table paste code help wordcount image'
                   ],
                   toolbar: 'undo redo | formatselect | ' +
                   'bold italic forecolor backcolor | alignleft aligncenter ' +
-                  'alignright alignjustify | bullist numlist outdent indent ',
-                  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                  'alignright alignjustify | bullist numlist outdent indent |image ',
+                  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                  images_upload_url: uploadImageApi,
+                  automatic_uploads: true,
                 }}>
                 </Editor>
                 </div>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*!
 * Start Bootstrap - Clean Blog v6.0.7 (https://startbootstrap.com/theme/clean-blog)
-* Copyright 2013-2021 Start Bootstrap
+* Copyright 2013-2022 Start Bootstrap
 * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-clean-blog/blob/master/LICENSE)
 */
 /*!
@@ -11197,6 +11197,90 @@ header.masthead .site-heading .h1 {
     font-size: 3.5rem;
   }
   header.masthead .post-heading .subheading {
+    font-size: 1.875rem;
+  }
+}
+
+header.mastpost {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  background: no-repeat center center;
+  background-color: #6c757d;
+  background-size: cover;
+  background-attachment: scroll;
+}
+header.mastpost:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #212529;
+  opacity: 0.5;
+}
+header.mastpost .page-heading,
+header.mastpost .post-heading,
+header.mastpost .site-heading {
+  color: #fff;
+}
+header.mastpost .page-heading,
+header.mastpost .site-heading {
+  text-align: center;
+}
+header.mastpost .page-heading h1, header.mastpost .page-heading .h1,
+header.mastpost .site-heading h1,
+header.mastpost .site-heading .h1 {
+  font-size: 3rem;
+}
+header.mastpost .page-heading .subheading,
+header.mastpost .site-heading .subheading {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.1;
+  display: block;
+  margin-top: 0.625rem;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+header.mastpost .post-heading h1, header.mastpost .post-heading .h1 {
+  font-size: 2.25rem;
+}
+header.mastpost .post-heading .meta,
+header.mastpost .post-heading .subheading {
+  line-height: 1.1;
+  display: block;
+}
+header.mastpost .post-heading .subheading {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0.75rem 0 2rem;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+header.mastpost .post-heading .meta {
+  font-size: 1.25rem;
+  font-weight: 300;
+  font-style: italic;
+  font-family: "Lora", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+header.mastpost .post-heading .meta a {
+  color: #fff;
+}
+@media (min-width: 992px) {
+  header.mastpost {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+  }
+  header.mastpost .page-heading h1, header.mastpost .page-heading .h1,
+header.mastpost .site-heading h1,
+header.mastpost .site-heading .h1 {
+    font-size: 5rem;
+  }
+  header.mastpost .post-heading h1, header.mastpost .post-heading .h1 {
+    font-size: 3.5rem;
+  }
+  header.mastpost .post-heading .subheading {
     font-size: 1.875rem;
   }
 }
