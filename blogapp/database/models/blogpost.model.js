@@ -3,6 +3,10 @@ const PostSchema= new mongoose.Schema({
     "title":String,
     "description":String,
     "content":String,
+    "category":{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Category"
+              },
     "updated":{type:Date, default:Date.now},
     "tags":[String]
 });

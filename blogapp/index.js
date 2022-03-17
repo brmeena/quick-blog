@@ -5,9 +5,12 @@ var morgan = require('morgan')
 const app= express();
 const expressEdge = require("express-edge");
 const mongoose= require("mongoose")
+const cachegoose= require("recachegoose")
 const config = require("./config/config.json")
 const bodyParser=require("body-parser");
 const { Post } = require("./database/db.models");
+const blogService = require("./resources/blogpost/blogpost.service");
+const categoryService = require("./resources/category/category.service");
 require("dotenv").config();
 app.use(express.static("public"));
 app.use(expressEdge.engine);
@@ -23,8 +26,10 @@ console.log(`Db name is ${config.db_name}`);
 mongoose.connect(process.env.mongoDbConnectionUri+"/"+config.db_name)
     .then(()=> { console.log("Db connect successful")})
     .catch(err=> console.log(`error is ${err}`,err))
-    
-    
+cachegoose(mongoose, {
+        engine: 'memory'
+      });
+
 app.get("/",async(req,res)=>{
     handleHomePage(res);
 });
@@ -37,10 +42,12 @@ app.use("/api/services/",require("./services/services.index"))
 app.use("/posts/",require("./viewcontrollers/view.post.controller"));
 
 const handleHomePage= async(res)=> {
-    const posts=await Post.find({});
+    const posts=await blogService.getAllWithCache();
+    let categories = await categoryService.getAllWithCache();
     header_data={
         'title':"Home page of Simple Blog tool - Blog Post",
-        'description':"It is simplest way to create blogs on net"
+        'description':"It is simplest way to create blogs on net",
+        'categories': categories,
     };
     res.render("index",{posts:posts,header_data:header_data,process:process})
 }

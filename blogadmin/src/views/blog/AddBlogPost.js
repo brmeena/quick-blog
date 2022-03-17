@@ -1,4 +1,4 @@
-import { CButton, CFormLabel } from '@coreui/react';
+import { CButton, CFormLabel, CRow,CCol } from '@coreui/react';
 import { ErrorMessage, Field, Formik } from 'formik';
 import { Form } from 'formik';
 import React,{useRef,useEffect, useState} from 'react';
@@ -8,11 +8,13 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { useLocation } from 'react-router-dom';
 import resourceservice from 'src/services/resourceservice';
 import resourcetypes from 'src/constants/resourcetypes';
+import CErrorMessage from 'src/components/error/CErrorMessage';
 function AddBlogPost() {
     const editorRef = useRef(null);
     const formikRef= useRef(null);
     const history= useHistory();
-    const [postObj,setPostObj]=useState({'title':'','description':'','content':''});
+    const [postObj,setPostObj]=useState({'title':'','description':'','content':'','category':''});
+    const [categoryList,setCategoryList] = useState(null)
     const search = useLocation().search;
     const postId = new URLSearchParams(search).get('id');
     const uploadImageApi=`${process.env.REACT_APP_API_URL}/api/services/upload/image`
@@ -21,6 +23,7 @@ function AddBlogPost() {
         'title':postObj['title'],
         'description':postObj['description'],
         'content':postObj['content'],
+        'category':postObj['category'],
     };
     useEffect(()=> {
         if(postId){
@@ -34,8 +37,20 @@ function AddBlogPost() {
             console.log("id is null");
         }
     },[]);
+
+    useEffect(()=> {
+           resourceservice.getAll(resourcetypes.CATEGORY)
+           .then((cl)=> {
+               setCategoryList(cl);
+           })
+           .catch((err)=> {
+               console.log(err);
+           })
+    },[])
     const validationSchema=Yup.object({
-        title:Yup.string().required("Required")
+        title:Yup.string().required("Required"),
+        description:Yup.string().required("required"),
+        category:Yup.string().required("Required"),
     });
     const handleOnSubmit=(values)=>{
         console.log("handle on submit called");
@@ -72,15 +87,37 @@ function AddBlogPost() {
         enableReinitialize
         >
             <Form>
-                <div className='form-group'>
-                <CFormLabel>Blog title</CFormLabel><br/>
-                <Field name="title" className="form-input" type="text" size="80"/>
-                <ErrorMessage name="title"/>
-                </div><br/>
+                <CRow>
+                    <CCol md="2">
+                        <div className='form-group'>
+                    <CFormLabel>Blog Category</CFormLabel><br/>
+                    <Field 
+                        name="category" 
+                        className="form-input" 
+                        as="select" 
+                    >
+                    <option value="" disabled></option>
+                    {  categoryList && categoryList.map((ci,idx)=> (
+                        <option value={ci._id} key={idx}>{ci.name}</option>
+                    ))
+                    }
+                    </Field>
+                    <CErrorMessage name="category"/>
+                    </div>
+                    </CCol>
+                    <CCol mod="10">
+
+                    <div className='form-group'>
+                        <CFormLabel>Blog title</CFormLabel><br/>
+                        <Field name="title" className="form-input" type="text" size="80"/>
+                        <CErrorMessage name="title"/>
+                    </div>
+                    </CCol>
+                </CRow><br/>
                 <div className='form-group'>
                 <CFormLabel>Blog Description</CFormLabel><br/>
                 <Field name="description" className="form-input" as="textarea" cols="80" rows="2"/>
-                <ErrorMessage name="description"/>
+                <CErrorMessage name="description"/>
                 </div><br/>
                 <div className='form-group'>
                 <CFormLabel>Blog Content</CFormLabel><br/>
