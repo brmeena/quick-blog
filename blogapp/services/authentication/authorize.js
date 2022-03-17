@@ -12,7 +12,7 @@ function authorize(roles=[]){
             //console.log(roles);
             const account = await db.User.findOne({userid:req.user.id});
             //console.log(account);
-            if(!account || (account.role && !roles.includes(account.role) ))
+            if(!account || (account.role && roles.length && !roles.includes(account.role) ))
             {
                 console.log("user not authorized");
                 return res.status(401).json({"message":"Unauthorized accesss"});

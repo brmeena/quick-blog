@@ -24,6 +24,7 @@ mongoose.connect(process.env.mongoDbConnectionUri+"/"+config.db_name)
     .then(()=> { console.log("Db connect successful")})
     .catch(err=> console.log(`error is ${err}`,err))
     
+    
 app.get("/",async(req,res)=>{
     handleHomePage(res);
 });
