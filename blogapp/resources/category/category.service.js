@@ -2,6 +2,7 @@ const { Category } = require("../../database/db.models")
 
 module.exports = {
     getById,
+    getByIdWithCache,
     getAll,
     getAllWithCache,
     create,
@@ -10,6 +11,11 @@ module.exports = {
 
 async function getById(id){
     return await Category.findById(id)
+}
+
+
+async function getByIdWithCache(id){
+    return await Category.findById(id).cache(300)
 }
 
 async function getAll(params)

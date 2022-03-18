@@ -5,8 +5,8 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>Clean Blog</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                            <h1>{{category.name}} - {{category.title}} </h1>
+                            <span class="subheading">{{category.description}}</span>
                         </div>
                     </div>
                 </div>
@@ -30,17 +30,17 @@
                     <!-- Divider-->
                     <hr class="my-4" />
                     @endeach
-                   
+                    <!-- Pager-->
                 </div>
             </div>
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                  <!-- Pager-->
-                  @if(header_data.prev_page>0)
-                  <div class="d-flex justify-content-start mb-4 col-sm-12 col-md-6"><a class="btn btn-success text-uppercase" href="?page={{header_data.prev_page}}">← Newer Posts</a></div>
-                 @endif 
-                  @if(header_data.next_page>0)
-                   <div class="d-flex justify-content-end mb-4 col-sm-12 col-md-6"><a class="btn btn-primary text-uppercase" href="?page={{header_data.next_page}}">Older Posts →</a></div>
-                  @endif 
-            </div>
+                <!-- Pager-->
+                @if(header_data.prev_page>0)
+                <div class="d-flex justify-content-start mb-4 col-sm-12 col-md-6"><a class="btn btn-success text-uppercase" href="?page={{header_data.prev_page}}">← Newer Posts</a></div>
+               @endif 
+                @if(header_data.next_page>0)
+                 <div class="d-flex justify-content-end mb-4 col-sm-12 col-md-6"><a class="btn btn-primary text-uppercase" href="?page={{header_data.next_page}}">Older Posts →</a></div>
+                @endif 
+          </div>
         </div>
 @include('partials/footer')

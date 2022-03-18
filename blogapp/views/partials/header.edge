@@ -4,9 +4,16 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="{{header_data.description}}" />
-        <meta name="author" content="" />
+        <meta name='robots' content='index,follow'>
         <title>{{header_data.title}}</title>
         <link rel="icon" type="image/x-icon" href="{{process.env.HOME_URL}}/assets/favicon.ico" />
+        <link rel="canonical" href="{{header_data.canonical_url}}" />
+        @if(header_data.next_page>0)
+         <link rel="next" href="{{header_data.canonical_url}}?page={{header_data.next_page}}"/>
+        @endif
+        @if(header_data.prev_page>0)
+         <link rel="prev" href="{{header_data.canonical_url}}?page={{header_data.prev_page}}"/>
+        @endif 
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -27,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
                         @each(category in header_data.categories)
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{process.env.HOME_URL}}/{{category.name}}">{{category.name}}</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{process.env.HOME_URL}}/category-{{category.name}}-c{{category._id}}.html">{{category.name}}</a></li>
                         @endeach
                      </ul>
                 </div>
