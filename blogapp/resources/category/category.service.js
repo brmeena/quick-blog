@@ -1,4 +1,5 @@
 const { Category } = require("../../database/db.models")
+const urlutilties = require("../../utilities/urlutilities")
 
 module.exports = {
     getById,
@@ -25,7 +26,11 @@ async function getAll(params)
 
 async function getAllWithCache(params)
 {
-    return await Category.find({}).cache(300)
+    let categories= await Category.find({}).cache(300)
+    return categories.map((c)=> {
+        c.url=getCategoryUrl(c)
+        return c
+    })
 }
 
 
@@ -43,3 +48,6 @@ async function update(id,params){
     return resource;
 }
 
+function getCategoryUrl(category){
+    return "/category-"+urlutilties.getSeoFriendlyName(category.name)+"-c"+category._id+".html"
+}

@@ -1,0 +1,20 @@
+<div class="row justify-content-star">
+    <div class="col-md-4">
+          <span class="subheading"><b>Latest Posts</b></span>
+    </div>
+ </div>
+ <div class="row gx-4 gx-lg-5 justify-content-center">
+         @each(post in posts)
+         <div class="col-md-4 col-lg-4 col-xl-4">
+     
+         <!-- Post preview-->
+         <div class="post-preview">
+             <a href="{{post.url}}">
+                 <span class="post-title">{{post.title}}</span>
+                 <p class="post-subtitle">{{post.description}}</p>
+             </a>
+          </div>
+         </div>
+     @endeach  
+     <hr class="my-4" />  
+ </div>

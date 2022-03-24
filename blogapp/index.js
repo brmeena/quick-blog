@@ -4,6 +4,7 @@ const cors=require("cors");
 var morgan = require('morgan')
 const app= express();
 const expressEdge = require("express-edge");
+const edge = require('edge.js');
 const mongoose= require("mongoose")
 const cachegoose= require("recachegoose")
 const config = require("./config/config.json")
@@ -21,6 +22,10 @@ app.use(morgan("combined"));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({"extended": true}));
 app.set("views",__dirname+"/views");
+edge.global('process',process)
+edge.global('log',function(logtxt){
+    console.log(logtxt)
+})
 app.listen(process.env.PORT,()=>{
     console.log(`blogapp started at ${process.env.PORT} ...`);
 });
@@ -45,6 +50,8 @@ app.get("/category-(:title)-c(:id).html",async(req,res)=> {
 app.use("/api/resources/",require("./resources/resources.index"))
 app.use("/api/services/",require("./services/services.index"))
 app.use("/posts/",require("./viewcontrollers/view.post.controller"));
+app.use("/sitemaps/",require("./viewcontrollers/sitemap.controller"));
+
 
 const handleCategoryPage= async(req,res)=> {
     let page=1;
@@ -57,7 +64,7 @@ const handleCategoryPage= async(req,res)=> {
     const total_posts = await blogService.getTotalCategoryPostsWithCache(categoryObj._id);
 
     const categoryPosts= await blogService.getAllCategoryPostsWithCache(categoryObj._id,{"page":page});
-    console.log(categoryPosts);
+    //console.log(categoryPosts);
     let categories = await categoryService.getAllWithCache();
     let page_int=parseInt(page);
     let last_page=Math.ceil(total_posts/PaginationConfiguration.limit);
@@ -79,41 +86,42 @@ const handleCategoryPage= async(req,res)=> {
         'next_page':next_page,
         'prev_page':prev_page,
     };
-    res.render("category",{posts:categoryPosts,category:categoryObj,header_data:header_data,process:process})
+    res.render("category",{posts:categoryPosts,category:categoryObj,header_data:header_data})
 
 }
 const handleHomePage= async(req,res)=> {
     let page=1;
-    if(req.query.page)
-    {
-        page=req.query.page;
-    }
-    const total_posts = await blogService.getTotalPostCountWithCache();
-    console.log("total posts" + total_posts);
-    const posts=await blogService.getAllWithCache({"page":page});
+    const posts=await blogService.getAllWithCache({"page":page,"limit":3});
     let categories = await categoryService.getAllWithCache();
-    
-    let page_int=parseInt(page);
-    let last_page=Math.ceil(total_posts/PaginationConfiguration.limit);
-    let next_page=page_int+1
-    if(next_page>last_page)
-    {
-        next_page=0;
+    let plugins={}
+    let pluginItem={
+        'plugin_id':'latest_posts_horizontal',
+        'plugin_data':{"posts":posts},
     }
-    let prev_page=page_int-1
-    if(prev_page < 1)
-    {
-        prev_page=0;
-    }
+    plugins['latest_posts']=pluginItem
+    await Promise.all(categories.map( async(category)=> {
+        //console.log(category);
+        let posts= await blogService.getAllCategoryPostsWithCache(category._id,{"page":page,"limit":3})
+        let pluginItem={
+            'plugin_id':'category_latest_posts_horizontal',
+            'plugin_data':{
+                "posts": posts,
+                "category": category
+            },
+        }
+        //console.log(pluginItem)
+        plugins[category._id+'_latest_posts']=pluginItem
+    }))
+
+    console.log(plugins)
+
     header_data={
         'title':"Home page of Simple Blog tool - Blog Post",
         'description':"It is simplest way to create blogs on net",
         'categories': categories,
         'canonical_url': process.env.HOME_URL,
-        'next_page':next_page,
-        'prev_page':prev_page,
     };
 
-    res.render("index",{posts:posts,header_data:header_data,process:process})
+    res.render("index",{header_data:header_data,plugins:plugins})
 }
 
