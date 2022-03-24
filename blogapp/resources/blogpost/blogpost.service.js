@@ -23,8 +23,10 @@ async function getById(blogPostId){
 }
 
 async function getByIdWithCache(blogPostId){
-    return await Post.findById(blogPostId).populate("category").lean()
+    let post= await Post.findById(blogPostId).populate("category").lean()
                 .cache(300)
+    post["url"]="/posts/"+urlutilities.getSeoFriendlyName(post.title)+"-i"+post._id+".html";
+    return post;
 }
 
 
@@ -35,9 +37,21 @@ async function getAll(params)
 
 async function getAllWithCache(params)
 {
-    let page=parseInt(params['page'])
-    let skip_count=PaginationConfiguration.limit*(page-1);
-    let posts =await Post.find({}).skip(skip_count).limit(PaginationConfiguration.limit).cache(300)
+    let posts = null;
+    if(params)
+    {
+        let page=parseInt(params['page'])
+        let limit =PaginationConfiguration.limit;
+        if(params['limit'])
+        {
+            limit=parseInt(params['limit'])
+        }
+        let skip_count=limit*(page-1);
+        posts =await Post.find({},{"_id":1,"title":1,"description":1}).skip(skip_count).limit(limit).cache(300)
+    }
+    else{
+        posts =await Post.find({},{"_id":1,"title":1}).cache(300)
+    }  
     return posts.map((p)=> {
         p['url']="/posts/"+urlutilities.getSeoFriendlyName(p.title)+"-i"+p._id+".html"
         return p;
@@ -52,8 +66,13 @@ async function getTotalCategoryPostsWithCache(categoryId)
 async function getAllCategoryPostsWithCache(categoryId,params)
 {
     let page=parseInt(params['page'])
-    let skip_count=PaginationConfiguration.limit*(page-1);
-    let posts= await Post.find({'category':categoryId}).skip(skip_count).limit(PaginationConfiguration.limit).cache(300)
+    let limit=PaginationConfiguration.limit;
+    if(params['limit'])
+    {
+        limit=parseInt(params['limit']);
+    }
+    let skip_count=limit*(page-1);
+    let posts= await Post.find({'category':categoryId}).skip(skip_count).limit(limit).cache(300)
     return posts.map((p)=> {
         p.url="/posts/"+urlutilities.getSeoFriendlyName(p.title)+"-i"+p._id+".html";
         return p;
@@ -67,7 +86,7 @@ async function create(params){
 }
 
 async function update(blogPostId,params){
-    console.log(params);
+    //console.log(params);
     let post=await Post.findById(blogPostId);
     post['title']=params['title'];
     post['content']=params['content'];

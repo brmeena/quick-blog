@@ -20,8 +20,11 @@
 // Styling for post previews on the blog homepage
 
 .post-preview {
+    background-color: #f8f8f8;
+    padding: 5px;
     >a {
         color: $gray-900;
+        
 
         &:focus,
         &:hover {

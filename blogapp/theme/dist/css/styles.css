@@ -11300,6 +11300,10 @@ header.mastpost .site-heading .h1 {
   text-align: center;
 }
 
+.post-preview {
+  background-color: #f8f8f8;
+  padding: 5px;
+}
 .post-preview > a {
   color: #212529;
 }

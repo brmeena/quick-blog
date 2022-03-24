@@ -1,12 +1,12 @@
 @include('partials/header')
         <!-- Page Header-->
-        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+        <header class="mastpost">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
-                            <h1>Clean Blog</h1>
-                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                            <h1>Quick Blog</h1>
+                            <span class="subheading">A Blog Framework by HinKhoj Team</span>
                         </div>
                     </div>
                 </div>
@@ -14,33 +14,20 @@
         </header>
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    @each(post in posts)
-                    <!-- Post preview-->
-                    <div class="post-preview">
-                        <a href="{{post.url}}">
-                            <h2 class="post-title">{{post.title}}</h2>
-                            <h3 class="post-subtitle">{{post.description}}</h3>
-                        </a>
-                        <p class="post-meta">
-                            Posted on {{ post.updated }}
-                        </p>
-                    </div>
-                    <!-- Divider-->
-                    <hr class="my-4" />
-                    @endeach
-                   
-                </div>
-            </div>
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                  <!-- Pager-->
-                  @if(header_data.prev_page>0)
-                  <div class="d-flex justify-content-start mb-4 col-sm-12 col-md-6"><a class="btn btn-success text-uppercase" href="?page={{header_data.prev_page}}">← Newer Posts</a></div>
-                 @endif 
-                  @if(header_data.next_page>0)
-                   <div class="d-flex justify-content-end mb-4 col-sm-12 col-md-6"><a class="btn btn-primary text-uppercase" href="?page={{header_data.next_page}}">Older Posts →</a></div>
-                  @endif 
-            </div>
+            @each(val in plugins)
+             @if( val.plugin_id ==="latest_posts_horizontal")
+                @set("posts",val["plugin_data"]["posts"])
+                @include('plugins/latest_posts_horizontal')
+             @endif
+             @if(val.plugin_id ==="category_latest_posts_horizontal")
+                    @set("posts",val["plugin_data"]["posts"])
+                    {{--log(val["plugin_data"]["posts"])--}}
+                    @set("category",val['plugin_data']['category'])
+                    @include('plugins/category_latest_posts_horizontal')
+             @endif
+             
+            @endeach
+             <!-- Divider-->
+             <hr class="my-4" />  
         </div>
 @include('partials/footer')
