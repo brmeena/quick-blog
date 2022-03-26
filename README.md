@@ -10,9 +10,9 @@ Steps to configure your blog
 1) Blog Website:  go to blogapp folder. copy .env-default to .env file. [Default Port: 4000]
    issue command : npm install
                    npm start
-                   url on localhost will be http://localhost:4000
+                   url on localhost will be localhost:4000
 2). Blog Admin : go to blogadmin folder. copy .env-default to .env file [Default Port: 5001]
    issue command : npm install
                    npm start
-                   url on localhost will be http://localhost:5001
-3) create Admin password: Visit page http://localhost:5001/install . Set your admin password in .env file before running install. 
+                   url on localhost will be localhost:5001
+3) create Admin password: Visit page localhost:5001/install . Set your admin password in .env file before running install. 
