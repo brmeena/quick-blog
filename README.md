@@ -1,5 +1,15 @@
 # quick-blog
-It is simple and quick blog which can be easily hosted with basic admin portal. Check Blog Demo at https://quick-blog-demo.herokuapp.com/   Development efforts thanks to https://hinkhoj.com
+It is simple and quick blog which can be easily hosted with basic admin portal. If you are looking for Blog Framework on MERN (MongoDB, Express, React, Node.js) stack, this is best framework for you. Very very lightweight and have all basic features of blogging.
+Features of framework:
+1. API on Node.js 
+2. Webapp using Express and Edge Template engine. Highly scalable.
+3. MongoDB as database for blog posts.
+4. Blog admin in React.
+5. Authentication available with Admin and Editor roles.
+6. Caching enabled at post level.
+
+
+Check Blog Demo at https://quick-blog-demo.herokuapp.com/   Development efforts thanks to https://hinkhoj.com
 
 Keep below things ready:
    a. MongoDB ( you will need MongoDB connection uri)
