@@ -18,11 +18,13 @@
     "changelog": "auto-changelog --starting-version 4.1.0 --commit-limit false --hide-credit",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "start:n17": "react-scripts --openssl-legacy-provider start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
-    "test:debug": "react-scripts --inspect-brk test --runInBand"
+    "test:debug": "react-scripts --inspect-brk test --runInBand",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "config": {
     "coreui_library_short_version": "4.1"
@@ -59,6 +61,7 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "gh-pages": "^3.2.3",
     "prettier": "2.5.0",
     "react-scripts": "^4.0.3",
     "sass": "^1.43.5"
