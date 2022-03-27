@@ -9,7 +9,9 @@ Features of framework:
 6. Caching enabled at post level.
 
 
-Check Blog Demo at https://quick-blog-demo.herokuapp.com/   Development efforts thanks to https://hinkhoj.com
+Check Blog Demo at https://quick-blog-demo.herokuapp.com/ 
+Admin Panel can be accessed at https://quick-blog-admin.herokuapp.com 
+Development efforts thanks to https://hinkhoj.com
 
 Keep below things ready:
    a. MongoDB ( you will need MongoDB connection uri)
