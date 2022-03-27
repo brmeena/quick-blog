@@ -18,7 +18,7 @@
     "changelog": "auto-changelog --starting-version 4.1.0 --commit-limit false --hide-credit",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "start:n17": "react-scripts --openssl-legacy-provider start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
@@ -67,7 +67,7 @@
     "sass": "^1.43.5"
   },
   "engines": {
-    "node": ">=10",
-    "npm": ">=6"
+    "node": ">15",
+    "npm": ">7"
   }
 }
