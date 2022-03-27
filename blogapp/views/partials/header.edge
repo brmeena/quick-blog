@@ -4,10 +4,17 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="{{header_data.description}}" />
+        @if(header_data.noindex)
+        <meta name='robots' content='noindex,follow'>
+        @endif
+        @if(!header_data.noindex)
         <meta name='robots' content='index,follow'>
+        @endif
         <title>{{header_data.title}}</title>
         <link rel="icon" type="image/x-icon" href="{{process.env.HOME_URL}}/assets/favicon.ico" />
+        @if(header_data.canonical_url)
         <link rel="canonical" href="{{header_data.canonical_url}}" />
+        @endif
         @if(header_data.next_page>0)
          <link rel="next" href="{{header_data.canonical_url}}?page={{header_data.next_page}}"/>
         @endif

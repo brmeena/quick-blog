@@ -16,7 +16,10 @@ async function getById(id){
 
 
 async function getByIdWithCache(id){
-    return await Category.findById(id).cache(300)
+    return await Category.findById(id).cache(300).catch((err)=> {
+        console.log(err);
+        return null;
+    })
 }
 
 async function getAll(params)
