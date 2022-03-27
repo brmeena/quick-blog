@@ -11,6 +11,10 @@ Features of framework:
 
 Check Blog Demo at https://quick-blog-demo.herokuapp.com/ 
 Admin Panel can be accessed at https://quick-blog-admin.herokuapp.com 
+Credentials for Admin Panel:
+  Login: demo
+  Password: demo123
+  
 Development efforts thanks to https://hinkhoj.com
 
 Keep below things ready:
