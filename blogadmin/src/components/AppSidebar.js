@@ -33,7 +33,7 @@ const AppSidebar = () => {
             <AdminSideBarNav/>
           ))
           }
-          {(user.role==roles.EDITOR && (
+          {((user.role==roles.EDITOR || user.role==roles.DEMO)&& (
             <EditorNavigation/>
           ))
           }

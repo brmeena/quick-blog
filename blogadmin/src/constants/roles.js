@@ -1,4 +1,5 @@
 export default{
     ADMIN:"Admin",
-    EDITOR:"Editor"
+    EDITOR:"Editor",
+    DEMO:'Demo',
 }

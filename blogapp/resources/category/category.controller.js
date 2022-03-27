@@ -2,11 +2,12 @@ const express = require("express");
 const resourceService = require("./category.service")
 let router=express.Router();
 const authorize=require("../../services/authentication/authorize");
+const Roles = require("../../constants/roles");
 
 router.get("/:id",getById);
 router.post("/getall",getAll);
-router.post("/create",authorize(),create);
-router.post("/update/:id",authorize(),update);
+router.post("/create",authorize([Roles.ADMIN]),create);
+router.post("/update/:id",authorize([Roles.ADMIN]),update);
 module.exports = router;
 
 async function getById(req,res,next){
