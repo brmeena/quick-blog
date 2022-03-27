@@ -29,11 +29,11 @@ const AppSidebar = () => {
     >
       <CSidebarNav>
         <SimpleBar>
-          {(user.role==roles.ADMIN && (
+          {((user.role==roles.ADMIN  || user.role==roles.DEMO) && (
             <AdminSideBarNav/>
           ))
           }
-          {((user.role==roles.EDITOR || user.role==roles.DEMO)&& (
+          {(user.role==roles.EDITOR && (
             <EditorNavigation/>
           ))
           }
