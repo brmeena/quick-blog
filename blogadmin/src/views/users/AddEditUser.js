@@ -117,7 +117,7 @@ function AddEditUser() {
                 <Field name="role" as="select">
                    <option value="Editor">Editor</option>
                    <option value="Admin">Admin</option>
-                   
+                   <option value="Demo">Demo</option>
                 </Field>
                 </CCol>
                 </CRow>

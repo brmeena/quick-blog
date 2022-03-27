@@ -29,8 +29,8 @@ edge.global('log',function(logtxt){
 app.listen(process.env.PORT,()=>{
     console.log(`blogapp started at ${process.env.PORT} ...`);
 });
-console.log(`Db name is ${config.db_name}`);
-mongoose.connect(process.env.mongoDbConnectionUri+"/"+config.db_name)
+console.log(`Db name is ${process.env.DB_NAME}`);
+mongoose.connect(process.env.mongoDbConnectionUri+"/"+process.env.DB_NAME)
     .then(()=> { console.log("Db connect successful")})
     .catch(err=> console.log(`error is ${err}`,err))
 cachegoose(mongoose, {
