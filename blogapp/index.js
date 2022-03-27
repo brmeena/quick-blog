@@ -43,7 +43,7 @@ app.get("/",async(req,res)=>{
 app.get("/index.*",async(req,res)=>{
     handleHomePage(req,res);
 });
-app.get("/category-(:title)-c(:id).html",async(req,res)=> {
+app.get("/category-*-c(:id).html",async(req,res)=> {
     handleCategoryPage(req,res);
 })
 
@@ -61,11 +61,21 @@ const handleCategoryPage= async(req,res)=> {
     }
 
     const categoryObj= await categoryService.getByIdWithCache(req.params.id);
-    const total_posts = await blogService.getTotalCategoryPostsWithCache(categoryObj._id);
-
-    const categoryPosts= await blogService.getAllCategoryPostsWithCache(categoryObj._id,{"page":page});
     //console.log(categoryPosts);
     let categories = await categoryService.getAllWithCache();
+    if(!categoryObj)
+    {
+        header_data={
+            'title':"404 - Page not found",
+            'description':"Page not available",
+            'noindex':true,
+            'categories': categories,
+        };
+        return res.render("404",{header_data:header_data})
+    }
+    const total_posts = await blogService.getTotalCategoryPostsWithCache(categoryObj._id);
+    const categoryPosts= await blogService.getAllCategoryPostsWithCache(categoryObj._id,{"page":page});
+
     let page_int=parseInt(page);
     let last_page=Math.ceil(total_posts/PaginationConfiguration.limit);
     let next_page=page_int+1
@@ -100,8 +110,9 @@ const handleHomePage= async(req,res)=> {
     }
     plugins['latest_posts']=pluginItem
     await Promise.all(categories.map( async(category)=> {
-        //console.log(category);
+        console.log(category);
         let posts= await blogService.getAllCategoryPostsWithCache(category._id,{"page":page,"limit":3})
+        console.log(posts);
         let pluginItem={
             'plugin_id':'category_latest_posts_horizontal',
             'plugin_data':{

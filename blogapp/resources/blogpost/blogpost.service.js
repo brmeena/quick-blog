@@ -24,8 +24,14 @@ async function getById(blogPostId){
 
 async function getByIdWithCache(blogPostId){
     let post= await Post.findById(blogPostId).populate("category").lean()
-                .cache(300)
-    post["url"]="/posts/"+urlutilities.getSeoFriendlyName(post.title)+"-i"+post._id+".html";
+                .cache(300,"blogpost_"+blogPostId).catch((err)=> {
+                    console.log(err);
+                    return null;
+                })
+    if(post)
+    {            
+        post["url"]="/posts/"+urlutilities.getSeoFriendlyName(post.title)+"-i"+post._id+".html";
+    }
     return post;
 }
 
@@ -47,10 +53,10 @@ async function getAllWithCache(params)
             limit=parseInt(params['limit'])
         }
         let skip_count=limit*(page-1);
-        posts =await Post.find({},{"_id":1,"title":1,"description":1}).skip(skip_count).limit(limit).cache(300)
+        posts =await Post.find({},{"_id":1,"title":1,"description":1,"updated":1}).sort({"updated":-1}).skip(skip_count).limit(limit).cache(300,"blogpostsall_"+skip_count+"_"+limit)
     }
     else{
-        posts =await Post.find({},{"_id":1,"title":1}).cache(300)
+        posts =await Post.find({},{"_id":1,"title":1,"updated":1}).sort({"updated":-1}).cache(300,"blogpostsall")
     }  
     return posts.map((p)=> {
         p['url']="/posts/"+urlutilities.getSeoFriendlyName(p.title)+"-i"+p._id+".html"
@@ -72,7 +78,7 @@ async function getAllCategoryPostsWithCache(categoryId,params)
         limit=parseInt(params['limit']);
     }
     let skip_count=limit*(page-1);
-    let posts= await Post.find({'category':categoryId}).skip(skip_count).limit(limit).cache(300)
+    let posts= await Post.find({'category':categoryId},{"_id":1,"title":1,"description":1,"updated":1}).sort({"updated":-1}).skip(skip_count).limit(limit).cache(300,"blogcategory_"+categoryId+"_"+skip_count+"_"+limit)
     return posts.map((p)=> {
         p.url="/posts/"+urlutilities.getSeoFriendlyName(p.title)+"-i"+p._id+".html";
         return p;

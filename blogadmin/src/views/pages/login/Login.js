@@ -34,7 +34,7 @@ const Login = () => {
       console.log(user);
       console.log("token is "+user.data.token);
       history.push("/dashboard");
-      location.reload();
+      window.location.reload();
     })
     .catch((err)=> {
       console.log(err);
