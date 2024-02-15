@@ -1,7 +1,8 @@
 const path = require("path");
 const express=require("express");
 const cors=require("cors");
-var morgan = require('morgan')
+var morgan = require('morgan');
+const compression = require('compression');
 const app= express();
 const expressEdge = require("express-edge");
 const edge = require('edge.js');
@@ -17,6 +18,8 @@ const urlutilities = require("./utilities/urlutilities")
 require("dotenv").config();
 app.use(express.static("public"));
 app.use(expressEdge.engine);
+app.use(compression());
+app.disable('x-powered-by');
 app.use(cors());
 app.use(morgan("combined"));
 app.use(bodyParser.json())
