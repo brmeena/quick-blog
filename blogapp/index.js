@@ -15,6 +15,7 @@ const blogService = require("./resources/blogpost/blogpost.service");
 const categoryService = require("./resources/category/category.service");
 const PaginationConfiguration = require("./constants/paginationconfig");
 const urlutilities = require("./utilities/urlutilities")
+var device = require('express-device');
 require("dotenv").config();
 app.use(express.static("public"));
 app.use(expressEdge.engine);
@@ -24,7 +25,9 @@ app.use(cors());
 app.use(morgan("combined"));
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({"extended": true}));
+app.use(device.capture());
 app.set("views",__dirname+"/views");
+
 edge.global('process',process)
 edge.global('log',function(logtxt){
     console.log(logtxt)
