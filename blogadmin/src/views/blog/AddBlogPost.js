@@ -30,7 +30,13 @@ function AddBlogPost() {
             console.log("id is "+postId);
             resourceservice.getById(resourcetypes.BLOG_POST,postId).then((postItem)=> {
                 console.log(postItem);
-                setPostObj(postItem);
+                let tPostObj={}
+                tPostObj['_id']=postItem['_id'];
+                tPostObj['title']=postItem['title']
+                tPostObj['content']=postItem['content']
+                tPostObj['description']=postItem['description']
+                tPostObj['category']=postItem['category']['_id']
+                setPostObj(tPostObj);
             });
         }
         else{
